@@ -52,19 +52,21 @@ public class OperationsOnStrings {
 
     public static Boolean isValid(String s){
         HashMap<Character,Character> maps=new HashMap<Character,Character>();
-        maps.put(')','(');
-        maps.put(']','[');
-        maps.put('}','{');
+        maps.put('(',')');
+        maps.put('[',']');
+        maps.put('{','}');
         Stack<Character> stack=new Stack<Character>();
         for(int i=0;i<s.length();i++){
             char c=s.charAt(i);
             if(maps.containsKey(c)){
-                if(stack.empty()||stack.pop()!=maps.get(c))return false;
+                stack.push(maps.get(c));
+            }else if(maps.containsValue(c)) {
+                if(stack.isEmpty() || stack.pop() != c){
+                    return false;
+                }
             }
-            else
-                stack.push(c);
         }
-        return stack.empty();
+        return stack.isEmpty();
     }
 
     public static String myStoi(String s){

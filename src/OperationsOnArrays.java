@@ -1,8 +1,23 @@
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import java.util.*;
 
 public class OperationsOnArrays {
+
+    public static int lastStoneWeight(int[] stones){
+        if(stones.length == 1){ return stones[0]; }
+        int i = stones.length - 1;
+        Arrays.sort(stones);
+        while (stones[i - 1] != 0) {
+            if(stones[i - 1] == stones[i]){
+                stones[i - 1] = 0;
+                stones[i] = 0;
+            } else if (stones[i - 1] != stones[i]) {
+                stones[i - 1] = stones[i] - stones[i - 1];
+                stones[i] = 0;
+            }
+            Arrays.sort(stones);
+        }
+        return stones[stones.length - 1];
+    }
 
     public static int[] twoSumFromArrayBrute(int[] arr, int x){
         for(int i = 0; i < arr.length; i++){
@@ -13,6 +28,17 @@ public class OperationsOnArrays {
             }
         }
         return null;
+    }
+
+    public static boolean containersDuplicate(int[] nums){
+        Set<Integer> map = new HashSet<>();
+        for(int i : nums){
+            if(map.contains(i)){
+                return true;
+            }
+            map.add(i);
+        }
+        return false;
     }
 
     public static int[] twoSumFromArrayBest(int[] nums, int target) {
